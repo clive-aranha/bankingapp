@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Withdraw Money</title>
+    <link rel="stylesheet" href="{% static 'bank/styles.css' %}">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #181C14; /* Dark background */
+            color: #E4E6C3; /* Light text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Withdraw Money Page */
+        .withdraw-container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #2A2F21; /* Slightly lighter than body background */
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .withdraw-container h1 {
+            margin-bottom: 30px;
+            color: #A3D977; /* Accent green */
+        }
+
+        .withdraw-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .withdraw-container label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #E4E6C3;
+        }
+
+        .withdraw-container input, .withdraw-container button {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .withdraw-container input {
+            background-color: #fff;
+            color: #333;
+        }
+
+        .withdraw-container input:focus {
+            border-color: #A3D977;
+            outline: none;
+        }
+
+        .withdraw-container button {
+            background-color: #A3D977; /* Green button */
+            color: #181C14; /* Dark text for contrast */
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .withdraw-container button:hover {
+            background-color: #91C665; /* Slightly darker green */
+        }
+
+        .balance-info {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #E4E6C3;
+        }
+
+        .back-link {
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #A3D977;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="withdraw-container">
+        <h1>Withdraw Money</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <!-- Withdraw form fields (e.g., amount to withdraw) -->
+                {{ form.as_p }}
+            </div>
+            
+            <button type="submit">Withdraw</button>
+        </form>
+
+        <div class="balance-info">
+            <p>Your current balance: ₹{{ account.balance }}</p>
+        </div>
+
+        <div class="back-link">
+            <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+        </div>
+    </div>
+
+</body>
+</html>

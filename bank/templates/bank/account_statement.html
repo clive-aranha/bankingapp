@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Statement</title>
+    <link rel="stylesheet" href="{% static 'bank/styles.css' %}">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #181C14; /* Dark background */
+            color: #E4E6C3; /* Light text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Account Statement Container */
+        .container {
+            max-width: 800px;
+            margin: 30px;
+            padding: 30px;
+            background-color: #2A2F21; /* Slightly lighter than the body background */
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        /* Page Title */
+        .page-title {
+            font-size: 2rem;
+            color: #A3D977; /* Accent green */
+            margin-bottom: 30px;
+        }
+
+        /* Account Info Section */
+        .account-info p {
+            font-size: 1.1rem;
+            color: #E4E6C3;
+            margin: 10px 0;
+        }
+
+        /* Transactions Section */
+        .transactions-list h3 {
+            font-size: 1.5rem;
+            color: #A3D977; /* Accent green */
+            margin-bottom: 15px;
+        }
+
+        .transactions-list ul {
+            list-style: none;
+            padding: 0;
+            color: #E4E6C3;
+        }
+
+        .transactions-list li {
+            font-size: 1rem;
+            margin: 8px 0;
+        }
+
+        /* Actions Section (Buttons) */
+        .actions {
+            margin-top: 30px;
+        }
+
+        .actions .btn-custom,
+        .actions .btn-secondary {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #A3D977; /* Green button */
+            color: #181C14; /* Dark text for contrast */
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 15px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .actions .btn-custom:hover {
+            background-color: #91C665; /* Slightly darker green */
+        }
+
+        .actions .btn-secondary {
+            background-color: #777;
+        }
+
+        .actions .btn-secondary:hover {
+            background-color: #555; /* Darker grey */
+        }
+
+        /* Button Hover Effects */
+        .actions .btn-custom:hover {
+            background-color: #91C665;
+        }
+
+        .actions .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .actions .btn-secondary:hover {
+            background-color: #565e64;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="page-title">Account Statement</h1>
+        </header>
+
+        <div class="account-info">
+            <p><strong>Account Number:</strong> {{ account.account_number }}</p>
+            <p><strong>Current Balance:</strong> ₹{{ account.balance }}</p>
+        </div>
+
+        <div class="transactions-list">
+            <h3>Transactions</h3>
+            <ul>
+                {% for transaction in transactions %}
+                    <li>
+                        {{ transaction.timestamp }}:
+                        {% if transaction.transaction_type == 'deposit' %}
+                            Deposit of ₹{{ transaction.amount }} to your account
+                        {% elif transaction.transaction_type == 'withdraw' %}
+                            Withdrawal of ₹{{ transaction.amount }} from your account
+                        {% else %}
+                            {{ transaction.sender.account_number }} to 
+                            {% if transaction.receiver %}
+                                {{ transaction.receiver.account_number }}
+                            {% else %}
+                                {{ transaction.biller_name }}
+                            {% endif %}
+                            - ₹{{ transaction.amount }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'dashboard' %}" class="btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

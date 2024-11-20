@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transfer Funds</title>
+    <link rel="stylesheet" href="{% static 'bank/styles.css' %}">
+    <style>
+        /* General container styling */
+        .transfer-funds-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #2A2F21; /* Slightly lighter background */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: #E4E6C3; /* Light text color */
+            text-align: center;
+        }
+
+        /* Header styling */
+        .transfer-funds-container h1 {
+            color: #A3D977; /* Accent green */
+            margin-bottom: 30px;
+        }
+
+        /* Form styling */
+        .transfer-funds-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .transfer-funds-container form .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Input and button styling */
+        .transfer-funds-container input, .transfer-funds-container button {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .transfer-funds-container button {
+            background-color: #A3D977; /* Green button */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .transfer-funds-container button:hover {
+            background-color: #91C665; /* Slightly darker green */
+        }
+
+        /* Link styling for "Back to Dashboard" */
+        .transfer-funds-container .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .transfer-funds-container .back-link a {
+            color: #A3D977; /* Green link */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .transfer-funds-container .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="transfer-funds-container">
+        <h1>Transfer Funds</h1>
+
+        <!-- Form for transferring funds -->
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}  <!-- This will render the form fields as they are -->
+
+            <button type="submit">Transfer</button>
+        </form>
+
+        <!-- Link back to Dashboard -->
+        <div class="back-link">
+            <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+        </div>
+    </div>
+
+</body>
+</html>
